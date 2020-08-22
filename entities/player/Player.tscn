@@ -1,0 +1,252 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://entities/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://entities/player/bazooka.png" type="Texture" id=2]
+[ext_resource path="res://entities/player/frog-animation.png" type="Texture" id=3]
+[ext_resource path="res://entities/player/ScreenShaker.gd" type="Script" id=4]
+[ext_resource path="res://entities/player/dead_frog/DeadFrog.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.9995
+height = 7.42525
+
+[sub_resource type="Animation" id=2]
+resource_name = "iddle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 5, 14 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bazooka/Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -7.93928, 0.0, 7.1066, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Bazooka/Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -0.0415039, -3.65263 ), Vector2( 0, 0 ), Vector2( -0.124519, 0.99617 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "shoot left"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 14, 15, 14 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bazooka/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 2.781, 11.913 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Bazooka/Sprite:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 34.9, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Bazooka:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.0594101, -0.723106 ), Vector2( -3.80076, -10.1453 ), Vector2( 0.0594101, -0.723106 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Bazooka:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -38.3289, 0.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 14, 15, 14 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bazooka/Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -2.78098, -11.9126 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Bazooka/Sprite:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -34.9366, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Bazooka:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.0594101, -0.723106 ), Vector2( -3.80076, -10.1453 ), Vector2( 0.0594101, -0.723106 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Bazooka:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -38.3289, 0.0 ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 104.066, 67.2501 )
+z_index = 100
+collision_mask = 0
+script = ExtResource( 1 )
+spread = 10
+
+[node name="Bazooka" type="Node2D" parent="."]
+position = Vector2( 0.0594101, -0.723106 )
+
+[node name="Sprite" type="Sprite" parent="Bazooka"]
+texture = ExtResource( 2 )
+offset = Vector2( 1.36992, -1.62566 )
+
+[node name="Muzzle" type="Position2D" parent="Bazooka"]
+position = Vector2( 12.8545, -2.81377 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+offset = Vector2( -2.58036, -4.52322 )
+hframes = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.189491, -1.01852 )
+shape = SubResource( 1 )
+
+[node name="FireRate" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/iddle = SubResource( 2 )
+anims/run = SubResource( 3 )
+"anims/shoot left" = SubResource( 4 )
+"anims/shoot right" = SubResource( 5 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
+script = ExtResource( 4 )
+
+[node name="SpawnTrail" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="DeadFrog" parent="." instance=ExtResource( 5 )]
+visible = false
+position = Vector2( 0.198051, -3.76297 )
+[connection signal="timeout" from="SpawnTrail" to="." method="_on_SpawnTrail_timeout"]

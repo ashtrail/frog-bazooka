@@ -1,0 +1,168 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://entities/rocket/Rocket.gd" type="Script" id=1]
+[ext_resource path="res://entities/trail/DustTrail.tscn" type="PackedScene" id=2]
+[ext_resource path="res://entities/rocket/explosion_residue.png" type="Texture" id=3]
+[ext_resource path="res://entities/rocket/rocket.png" type="Texture" id=4]
+[ext_resource path="res://entities/rocket/explosion_100x100px.png" type="Texture" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.89986
+height = 9.41032
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 33.3406
+
+[sub_resource type="Animation" id=3]
+resource_name = "explode"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Explosion/AnimatedSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Explosion/AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 39 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Sprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Explosion/ExplosionArea/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/RocketCollider/RocketCollision:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Explosion/ExplosionArea:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.01, 0.02 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 1 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:oscillation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
+}
+
+[node name="Rocket" type="Node2D"]
+z_index = 100
+script = ExtResource( 1 )
+Trail = ExtResource( 2 )
+residue = ExtResource( 3 )
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="RocketCollider" type="Area2D" parent="Body"]
+collision_layer = 2
+collision_mask = 12
+
+[node name="RocketCollision" type="CollisionShape2D" parent="Body/RocketCollider"]
+position = Vector2( -0.584091, 0.0648994 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Body"]
+texture = ExtResource( 4 )
+
+[node name="Trail" type="Node2D" parent="."]
+editor/display_folded = true
+
+[node name="SpawnTimer" type="Timer" parent="Trail"]
+wait_time = 0.05
+autostart = true
+
+[node name="SpawnPos" type="Position2D" parent="Trail"]
+position = Vector2( -6.19353, 0 )
+
+[node name="Explosion" type="Node2D" parent="."]
+
+[node name="AnimatedSprite" type="Sprite" parent="Explosion"]
+visible = false
+texture = ExtResource( 5 )
+vframes = 8
+hframes = 8
+
+[node name="ExplosionArea" type="Area2D" parent="Explosion"]
+collision_layer = 18
+collision_mask = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Explosion/ExplosionArea"]
+position = Vector2( 0.87344, 0.0623894 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/explode = SubResource( 3 )
+anims/oscillate = SubResource( 4 )
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+[connection signal="area_entered" from="Body/RocketCollider" to="." method="_on_RocketCollider_area_entered"]
+[connection signal="body_entered" from="Body/RocketCollider" to="." method="_on_RocketCollider_body_entered"]
+[connection signal="timeout" from="Trail/SpawnTimer" to="." method="_on_TrailSpawnTimer_timeout"]
+[connection signal="area_entered" from="Explosion/ExplosionArea" to="." method="_on_ExplosionArea_area_entered"]
+[connection signal="body_entered" from="Explosion/ExplosionArea" to="." method="_on_ExplosionArea_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

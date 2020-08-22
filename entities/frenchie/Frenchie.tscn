@@ -1,0 +1,123 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://entities/frenchie/Frenchie.gd" type="Script" id=1]
+[ext_resource path="res://entities/frenchie/frenchie_corpse.png" type="Texture" id=2]
+[ext_resource path="res://entities/frenchie/frenchie-run.png" type="Texture" id=3]
+[ext_resource path="res://entities/frenchie/fork.png" type="Texture" id=4]
+[ext_resource path="res://entities/frenchie/butter knife.png" type="Texture" id=5]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.6337
+height = 7.86954
+
+[sub_resource type="Animation" id=2]
+resource_name = "run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprites/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprites/Cuttlery/Fork:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -28.8269, 0.0, 31.6239, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprites/Cuttlery/Knife:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 57.8158, 0.0, -32.4961, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprites/Cuttlery/Fork:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2.98735, 6.27457 ), Vector2( -3.07029, 5.00975 ), Vector2( -2.98735, 6.27457 ), Vector2( -3.09103, 4.15962 ), Vector2( -2.98735, 6.27457 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprites/Cuttlery/Knife:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 4.39424, 4.86461 ), Vector2( 3.41996, 5.98878 ), Vector2( 4.39424, 4.86461 ), Vector2( 5.48094, 2.16659 ), Vector2( 4.39424, 4.86461 ) ]
+}
+
+[node name="Frenchie" type="Area2D"]
+z_index = 100
+collision_layer = 4
+script = ExtResource( 1 )
+corpse = ExtResource( 2 )
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Sprites"]
+texture = ExtResource( 3 )
+hframes = 4
+
+[node name="Cuttlery" type="Node2D" parent="Sprites"]
+
+[node name="Fork" type="Sprite" parent="Sprites/Cuttlery"]
+position = Vector2( -2.99795, 6.113 )
+rotation = -0.0642702
+z_index = 1
+texture = ExtResource( 4 )
+offset = Vector2( 2.90996, -2.88237 )
+
+[node name="Knife" type="Sprite" parent="Sprites/Cuttlery"]
+position = Vector2( 4.26978, 5.00821 )
+rotation = 0.128902
+z_index = -1
+texture = ExtResource( 5 )
+offset = Vector2( 1.5553, -2.16689 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.379442, 0.594452 )
+scale = Vector2( 0.872652, 1 )
+shape = SubResource( 1 )
+
+[node name="ResetDirection" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/run = SubResource( 2 )
+
+[node name="SpawnTrail" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+[connection signal="area_entered" from="." to="." method="_on_Frenchie_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Frenchie_body_entered"]
+[connection signal="timeout" from="ResetDirection" to="." method="_on_ResetDirection_timeout"]
+[connection signal="timeout" from="SpawnTrail" to="." method="_on_SpawnTrail_timeout"]

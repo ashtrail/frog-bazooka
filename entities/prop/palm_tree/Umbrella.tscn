@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://entities/prop/Prop.gd" type="Script" id=1]
+[ext_resource path="res://entities/prop/umbrella_burned.png" type="Texture" id=2]
+[ext_resource path="res://entities/prop/umbrella.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.615364, 16.2569 )
+
+[node name="Umbrella" type="Area2D"]
+z_index = 100
+collision_layer = 8
+collision_mask = 0
+script = ExtResource( 1 )
+corpse = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 0.0417404 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.531815, -0.446681 )
+shape = SubResource( 1 )
+[connection signal="area_entered" from="." to="." method="_on_PalmTree_area_entered"]

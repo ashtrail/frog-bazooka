@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://fonts/Score.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/BigScore.tres" type="DynamicFont" id=2]
+[ext_resource path="res://fonts/Small.tres" type="DynamicFont" id=3]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Mayhem" type="Label" parent="UI"]
+margin_left = 143.188
+margin_top = 102.788
+margin_right = 245.188
+margin_bottom = 133.788
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 0.827451, 0.0509804, 1 )
+text = "Mayhem"
+align = 1
+
+[node name="Score" type="Label" parent="UI"]
+margin_left = 127.491
+margin_top = 77.8923
+margin_right = 257.491
+margin_bottom = 102.892
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.827451, 0.0509804, 1 )
+text = "3000"
+align = 1
+
+[node name="Restart" type="Label" parent="UI"]
+margin_left = 143.188
+margin_top = 186.41
+margin_right = 253.188
+margin_bottom = 200.41
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 0.827451, 0.0509804, 1 )
+text = "press R to restart"
